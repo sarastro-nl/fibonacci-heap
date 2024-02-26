@@ -4,18 +4,19 @@
 
 extern "C" {
 
-#define NROFDIGITS(x) ({size_t r;if (x < 10) { r = 1; } else if (x < 100) { r = 2;} else { r = 3;};r;})
+#define NROFDIGITS(x) ({size_t i = 1; int y = (x); while ((y) > 9) { (y) /= 10; i++; }; i; })
+#define STRLENGTH(s) ({size_t i = 0; const char *y = (s); while (*y) {i += (*y++ & 0xC0) != 0x80;}; i; })
 #define MININF -INT32_MAX
 
-typedef struct node {
+struct node_t {
     bool mark;
     int value;
     int degree;
-    struct node* left;
-    struct node* right;
-    struct node* child;
-    struct node* parent;
-} node_t;
+    node_t* left;
+    node_t* right;
+    node_t* child;
+    node_t* parent;
+};
 
 static struct {
     node_t* min;
@@ -196,24 +197,16 @@ node_t *remove_node(node_t *node) {
     return remove_minimum();
 }
 
-size_t string_length(const char *s) {
-    size_t count = 0;
-    while (*s) {
-        count += (*s++ & 0xC0) != 0x80;
-    }
-    return count;
-}
-
 void print_nodes(size_t *indent, size_t *maxNrOfChars, char **a, int row, node_t *node) {
     char buf[BUFSIZ];
     char *s = a[row];
     if (row > 0) {
-        size_t diff = *indent - string_length(s);
+        size_t diff = *indent - STRLENGTH(s);
         snprintf(buf, diff + 1, "%*s", (int)diff, "");
         strcat(s, buf);
         strcat(s, "│");
         s = a[++row];
-        diff = *indent - string_length(s);
+        diff = *indent - STRLENGTH(s);
         snprintf(buf, diff + 1, "%*s", (int)diff, "");
         strcat(s, buf);
     }
@@ -239,7 +232,7 @@ void print_nodes(size_t *indent, size_t *maxNrOfChars, char **a, int row, node_t
             *maxNrOfChars = 0;
         }
         if (start != node->right) {
-            size_t diff = *indent - string_length(s);
+            size_t diff = *indent - STRLENGTH(s);
             memset(buf, '-', diff);
             buf[diff] = 0;
             strcat(s, buf);

@@ -1,8 +1,7 @@
 # fibonacci-heap
-c implementation of a fibonacci heap
+C implementation of a [fibonacci heap](https://en.wikipedia.org/wiki/Fibonacci_heap).
 
-This implementation is loosly based on the python files shown in [these videos](https://www.youtube.com/watch?v=0vsX3ZQFREM&list=PL9xmBV_5YoZNkwWDXcSiZjMgacw2P0U2j&index=1) by Michael Sambol.
-
+This implementation is loosly based on the python files shown in [these videos](https://www.youtube.com/watch?v=0vsX3ZQFREM&list=PL9xmBV_5YoZNkwWDXcSiZjMgacw2P0U2j&index=1) by Michael Sambol but with some improvements in efficiency.
 
 The following functions for a fibonacci heap are implemented:
 
@@ -12,7 +11,7 @@ The following functions for a fibonacci heap are implemented:
 *  `change_value`
 *  `remove_node`
 
-Also a `print_heap()` function is provided that outputs the heap to console.
+Also a `print_heap()` function is provided that outputs the current heap to console.
 
 An example of what can be done is:
 
@@ -29,7 +28,7 @@ An example of what can be done is:
         free(node);
     }
 ```
-will give the following output
+which will give the following output
 
 ```text
 7-10-9-4-5-3-8
